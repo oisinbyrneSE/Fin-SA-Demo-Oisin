@@ -30,6 +30,31 @@
 
       }
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.11/chance.min.js"></script>
+<script>
+  // Function to generate fake user data using Chance.js
+  function generateFakeUser() {
+    var chance = new Chance();
+
+    var firstName = chance.first();
+    var lastName = chance.last();
+    var email = firstName.toLowerCase() + '.' + lastName.toLowerCase() + '@example.com';
+    var userId = chance.guid();
+    var createdAt = Math.floor(Date.now() / 1000);
+
+    return {
+      id: userId,
+      name: firstName + ' ' + lastName,
+      email: email,
+      created_at: createdAt
+    };
+  }
+
+  var fakeUser = generateFakeUser();
+</script>
+
+
   </head>
   <body class="p-6 flex flex-col flex-1 items-center justify-center min-h-screen bg-cover" style="background-image: url('https://downloads.intercomcdn.com/i/o/1051523575/8c16c6bb97ae791131ead20c/blur.jpg')">
     <div class="absolute top-2 left-2 h-16 w-16">
@@ -41,18 +66,48 @@
       </div>
       <button class="bg-black text-white p-2 m-2 rounded hover:bg-opacity-75" onclick="reset()">Reset</button>
     </div>
-    <script>
-  window.intercomSettings = {
-    api_base: "https://api-iam.intercom.io",
-    app_id: "mcoovmvo",
-  };
-</script>
 
-
+    <!-- Intercom Messenger -->
 <script>
-  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/mcoovmvo'
-  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/mcoovmvo';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
-</script>
+        // Populate window.intercomSettings with fake user data
+        window.intercomSettings = {
+          api_base: "https://api-iam.intercom.io",
+          app_id: "mcoovmvo",
+          user_id: fakeUser.id,
+          name: fakeUser.name,
+          email: fakeUser.email,
+          created_at: fakeUser.created_at
+        };
+      </script>
+      
+      <script>
+        // Intercom widget loader
+        (function() {
+          var w = window; var ic = w.Intercom;
+          if (typeof ic === "function") {
+            ic('reattach_activator'); ic('update', w.intercomSettings);
+          } else {
+            var d = document; var i = function() { i.c(arguments); };
+            i.q = []; i.c = function(args) { i.q.push(args); }; w.Intercom = i;
+            var l = function() {
+              var s = d.createElement('script'); s.type = 'text/javascript';
+              s.async = true; s.src = 'https://widget.intercom.io/widget/mcoovmvo';
+              var x = d.getElementsByTagName('script')[0];
+              x.parentNode.insertBefore(s, x);
+            };
+            if (document.readyState === 'complete') {
+              l();
+            } else if (w.attachEvent) {
+              w.attachEvent('onload', l);
+            } else {
+              w.addEventListener('load', l, false);
+            }
+          }
+        })();
+      </script>
+
+
+<!-- ZD messenger -->
     <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=06d4a2ec-c0c8-4972-b150-84fb4a06cf9f"> </script>
   </body>
 </html>
